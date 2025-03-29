@@ -1,3 +1,4 @@
+
 import type { Config } from "tailwindcss";
 
 export default {
@@ -61,7 +62,16 @@ export default {
 					'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
-				}
+				},
+                discord: {
+                    primary: '#5865F2',
+                    green: '#3BA55C',
+                    bg: '#36393F',
+                    sidebar: '#2F3136',
+                    channelbar: '#2F3136',
+                    server: '#202225',
+                    userbar: '#292B2F',
+                }
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
