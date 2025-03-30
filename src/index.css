@@ -34,15 +34,6 @@
     --ring: 235 86% 65%;
 
     --radius: 0.5rem;
-
-    --sidebar-background: 223 5% 14%;
-    --sidebar-foreground: 0 0% 100%;
-    --sidebar-primary: 235 86% 65%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 223 5% 20%;
-    --sidebar-accent-foreground: 0 0% 100%;
-    --sidebar-border: 223 5% 12%;
-    --sidebar-ring: 235 86% 65%;
   }
 }
 
@@ -52,26 +43,26 @@
   }
 
   body {
-    @apply bg-discord-bg text-foreground overflow-hidden;
+    @apply bg-discord-bg text-foreground overflow-auto;
   }
 }
 
-/* Custom scrollbar for Discord-like look */
+/* Custom scrollbar for nicer look */
 @layer utilities {
-  .discord-scrollbar::-webkit-scrollbar {
+  .custom-scrollbar::-webkit-scrollbar {
     width: 8px;
   }
   
-  .discord-scrollbar::-webkit-scrollbar-track {
+  .custom-scrollbar::-webkit-scrollbar-track {
     background: transparent;
   }
   
-  .discord-scrollbar::-webkit-scrollbar-thumb {
+  .custom-scrollbar::-webkit-scrollbar-thumb {
     @apply bg-discord-sidebar/70 rounded-full;
     border-radius: 8px;
   }
   
-  .discord-scrollbar::-webkit-scrollbar-thumb:hover {
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
     @apply bg-discord-sidebar;
   }
 }
