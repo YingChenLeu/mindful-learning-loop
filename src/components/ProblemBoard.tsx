@@ -5,6 +5,7 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/componen
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { ProblemChatDialog } from "./ProblemChatDialog";
 
 type Problem = {
   id: number;
@@ -89,68 +90,84 @@ const urgencyColors = {
 
 export const ProblemBoard = () => {
   const [problems, setProblems] = useState<Problem[]>(mockProblems);
+  const [selectedProblem, setSelectedProblem] = useState<Problem | null>(null);
+  const [isChatOpen, setIsChatOpen] = useState(false);
   
-  const handleHelpClick = (id: number) => {
-    console.log(`Helping with problem #${id}`);
-    // This would navigate to a detailed view in a real app
+  const handleHelpClick = (problem: Problem) => {
+    setSelectedProblem(problem);
+    setIsChatOpen(true);
+  };
+  
+  const handleCloseChatDialog = () => {
+    setIsChatOpen(false);
   };
   
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-      {problems.map((problem) => (
-        <Card key={problem.id} className="bg-discord-card border-discord-border h-full flex flex-col">
-          <CardHeader className="pb-2">
-            <div className="flex justify-between items-start mb-2">
-              <Badge className="bg-discord-primary/80 hover:bg-discord-primary">{problem.category}</Badge>
-              <Badge className={`${urgencyColors[problem.urgency]} hover:${urgencyColors[problem.urgency]}`}>
-                {problem.urgency.charAt(0).toUpperCase() + problem.urgency.slice(1)} Priority
-              </Badge>
-            </div>
-            <CardTitle className="text-lg text-white">{problem.title}</CardTitle>
-          </CardHeader>
-          
-          <CardContent className="flex-grow">
-            <p className="text-muted-foreground text-sm">{problem.description}</p>
-          </CardContent>
-          
-          <CardFooter className="flex flex-col border-t border-discord-border pt-4 gap-4">
-            <div className="flex items-center justify-between w-full">
-              <div className="flex items-center gap-2">
-                <Avatar className="h-6 w-6">
-                  {problem.user.avatar && <AvatarImage src={problem.user.avatar} />}
-                  <AvatarFallback style={{ backgroundColor: problem.user.color }}>{problem.user.name.charAt(0)}</AvatarFallback>
-                </Avatar>
-                <span className="text-sm text-muted-foreground">{problem.user.name}</span>
+    <>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {problems.map((problem) => (
+          <Card key={problem.id} className="bg-discord-card border-discord-border h-full flex flex-col">
+            <CardHeader className="pb-2">
+              <div className="flex justify-between items-start mb-2">
+                <Badge className="bg-discord-primary/80 hover:bg-discord-primary">{problem.category}</Badge>
+                <Badge className={`${urgencyColors[problem.urgency]} hover:${urgencyColors[problem.urgency]}`}>
+                  {problem.urgency.charAt(0).toUpperCase() + problem.urgency.slice(1)} Priority
+                </Badge>
               </div>
-              <div className="flex items-center text-muted-foreground text-xs gap-1">
-                <Clock size={14} />
-                <span>{problem.timestamp}</span>
-              </div>
-            </div>
+              <CardTitle className="text-lg text-white">{problem.title}</CardTitle>
+            </CardHeader>
             
-            <div className="flex justify-between items-center w-full">
-              <div className="flex gap-4">
-                <div className="flex items-center gap-1 text-muted-foreground text-sm">
-                  <MessageCircle size={16} />
-                  <span>{problem.responses}</span>
+            <CardContent className="flex-grow">
+              <p className="text-muted-foreground text-sm">{problem.description}</p>
+            </CardContent>
+            
+            <CardFooter className="flex flex-col border-t border-discord-border pt-4 gap-4">
+              <div className="flex items-center justify-between w-full">
+                <div className="flex items-center gap-2">
+                  <Avatar className="h-6 w-6">
+                    {problem.user.avatar && <AvatarImage src={problem.user.avatar} />}
+                    <AvatarFallback style={{ backgroundColor: problem.user.color }}>{problem.user.name.charAt(0)}</AvatarFallback>
+                  </Avatar>
+                  <span className="text-sm text-muted-foreground">{problem.user.name}</span>
                 </div>
-                <div className="flex items-center gap-1 text-muted-foreground text-sm">
-                  <ThumbsUp size={16} />
-                  <span>{problem.likes}</span>
+                <div className="flex items-center text-muted-foreground text-xs gap-1">
+                  <Clock size={14} />
+                  <span>{problem.timestamp}</span>
                 </div>
               </div>
               
-              <Button 
-                variant="default" 
-                className="bg-discord-primary hover:bg-discord-primary/90"
-                onClick={() => handleHelpClick(problem.id)}
-              >
-                Help Solve
-              </Button>
-            </div>
-          </CardFooter>
-        </Card>
-      ))}
-    </div>
+              <div className="flex justify-between items-center w-full">
+                <div className="flex gap-4">
+                  <div className="flex items-center gap-1 text-muted-foreground text-sm">
+                    <MessageCircle size={16} />
+                    <span>{problem.responses}</span>
+                  </div>
+                  <div className="flex items-center gap-1 text-muted-foreground text-sm">
+                    <ThumbsUp size={16} />
+                    <span>{problem.likes}</span>
+                  </div>
+                </div>
+                
+                <Button 
+                  variant="default" 
+                  className="bg-discord-primary hover:bg-discord-primary/90"
+                  onClick={() => handleHelpClick(problem)}
+                >
+                  Help Solve
+                </Button>
+              </div>
+            </CardFooter>
+          </Card>
+        ))}
+      </div>
+      
+      {selectedProblem && (
+        <ProblemChatDialog 
+          isOpen={isChatOpen} 
+          onClose={handleCloseChatDialog} 
+          problem={selectedProblem} 
+        />
+      )}
+    </>
   );
 };
