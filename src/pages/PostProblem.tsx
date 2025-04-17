@@ -1,7 +1,7 @@
 
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, ImagePlus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
@@ -10,7 +10,16 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 
 const PostProblem = () => {
   const navigate = useNavigate();
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
   
+  const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      const imageUrl = URL.createObjectURL(file);
+      setSelectedImage(imageUrl);
+    }
+  };
+
   return (
     <div className="container mx-auto p-6 max-w-2xl">
       <Button 
@@ -41,6 +50,36 @@ const PostProblem = () => {
               placeholder="Describe your problem in detail..."
               className="min-h-[200px]" 
             />
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="image">Image (optional)</Label>
+            <div className="flex flex-col gap-4">
+              <Button 
+                variant="outline" 
+                className="w-full h-32 flex flex-col items-center justify-center gap-2 border-dashed"
+                onClick={() => document.getElementById('image')?.click()}
+              >
+                <ImagePlus className="h-8 w-8 text-muted-foreground" />
+                <span className="text-muted-foreground">Click to upload an image</span>
+              </Button>
+              <Input 
+                type="file" 
+                id="image" 
+                className="hidden" 
+                accept="image/*"
+                onChange={handleImageChange}
+              />
+              {selectedImage && (
+                <div className="relative aspect-video w-full">
+                  <img 
+                    src={selectedImage} 
+                    alt="Selected" 
+                    className="rounded-md object-cover w-full h-full"
+                  />
+                </div>
+              )}
+            </div>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
