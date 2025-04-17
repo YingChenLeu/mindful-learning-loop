@@ -7,10 +7,13 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { courseGroups, type CourseCategory, type Course } from "@/utils/courseData";
 
 const PostProblem = () => {
   const navigate = useNavigate();
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const [selectedCategory, setSelectedCategory] = useState<CourseCategory | ''>('');
+  const [selectedCourse, setSelectedCourse] = useState<Course | ''>('');
   
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -18,6 +21,11 @@ const PostProblem = () => {
       const imageUrl = URL.createObjectURL(file);
       setSelectedImage(imageUrl);
     }
+  };
+
+  const handleCategoryChange = (value: string) => {
+    setSelectedCategory(value as CourseCategory);
+    setSelectedCourse(''); // Reset course when category changes
   };
 
   return (
@@ -85,30 +93,36 @@ const PostProblem = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-2">
               <Label htmlFor="category">Category</Label>
-              <Select>
+              <Select value={selectedCategory} onValueChange={handleCategoryChange}>
                 <SelectTrigger id="category">
                   <SelectValue placeholder="Select category" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="react">React</SelectItem>
-                  <SelectItem value="css">CSS</SelectItem>
-                  <SelectItem value="typescript">TypeScript</SelectItem>
-                  <SelectItem value="devops">DevOps</SelectItem>
-                  <SelectItem value="other">Other</SelectItem>
+                  {Object.keys(courseGroups).map((category) => (
+                    <SelectItem key={category} value={category}>
+                      {category}
+                    </SelectItem>
+                  ))}
                 </SelectContent>
               </Select>
             </div>
             
             <div className="space-y-2">
-              <Label htmlFor="urgency">Urgency</Label>
-              <Select>
-                <SelectTrigger id="urgency">
-                  <SelectValue placeholder="Select urgency" />
+              <Label htmlFor="course">Course</Label>
+              <Select 
+                value={selectedCourse} 
+                onValueChange={setSelectedCourse}
+                disabled={!selectedCategory}
+              >
+                <SelectTrigger id="course">
+                  <SelectValue placeholder={selectedCategory ? "Select course" : "Select a category first"} />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="low">Low</SelectItem>
-                  <SelectItem value="medium">Medium</SelectItem>
-                  <SelectItem value="high">High</SelectItem>
+                  {selectedCategory && courseGroups[selectedCategory].map((course) => (
+                    <SelectItem key={course} value={course}>
+                      {course}
+                    </SelectItem>
+                  ))}
                 </SelectContent>
               </Select>
             </div>
