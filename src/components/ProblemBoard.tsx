@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { MessageCircle, ThumbsUp, Clock } from "lucide-react";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
@@ -88,11 +87,19 @@ const urgencyColors = {
   high: "bg-red-500"
 };
 
-export const ProblemBoard = () => {
+interface ProblemBoardProps {
+  selectedCategory: string;
+}
+
+export const ProblemBoard = ({ selectedCategory }: ProblemBoardProps) => {
   const [problems, setProblems] = useState<Problem[]>(mockProblems);
   const [selectedProblem, setSelectedProblem] = useState<Problem | null>(null);
   const [isChatOpen, setIsChatOpen] = useState(false);
   
+  const filteredProblems = selectedCategory === "All" 
+    ? problems 
+    : problems.filter(problem => problem.category === selectedCategory);
+
   const handleHelpClick = (problem: Problem) => {
     setSelectedProblem(problem);
     setIsChatOpen(true);
@@ -105,7 +112,7 @@ export const ProblemBoard = () => {
   return (
     <>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {problems.map((problem) => (
+        {filteredProblems.map((problem) => (
           <Card key={problem.id} className="bg-discord-card border-discord-border h-full flex flex-col">
             <CardHeader className="pb-2">
               <div className="flex justify-between items-start mb-2">
