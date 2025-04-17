@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ArrowLeft, ImagePlus } from "lucide-react";
@@ -14,6 +13,7 @@ const PostProblem = () => {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [selectedCategory, setSelectedCategory] = useState<CourseCategory | ''>('');
   const [selectedCourse, setSelectedCourse] = useState<Course | ''>('');
+  const [urgency, setUrgency] = useState<string>('low');
   
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -26,6 +26,10 @@ const PostProblem = () => {
   const handleCategoryChange = (value: string) => {
     setSelectedCategory(value as CourseCategory);
     setSelectedCourse(''); // Reset course when category changes
+  };
+
+  const handleCourseChange = (value: string) => {
+    setSelectedCourse(value as Course);
   };
 
   return (
@@ -50,7 +54,59 @@ const PostProblem = () => {
             <Label htmlFor="title">Title</Label>
             <Input id="title" placeholder="What's your problem about?" />
           </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <Label htmlFor="category">Category</Label>
+              <Select value={selectedCategory} onValueChange={handleCategoryChange}>
+                <SelectTrigger id="category">
+                  <SelectValue placeholder="Select category" />
+                </SelectTrigger>
+                <SelectContent>
+                  {Object.keys(courseGroups).map((category) => (
+                    <SelectItem key={category} value={category}>
+                      {category}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+            
+            <div className="space-y-2">
+              <Label htmlFor="course">Course</Label>
+              <Select 
+                value={selectedCourse} 
+                onValueChange={handleCourseChange}
+                disabled={!selectedCategory}
+              >
+                <SelectTrigger id="course">
+                  <SelectValue placeholder={selectedCategory ? "Select course" : "Select a category first"} />
+                </SelectTrigger>
+                <SelectContent>
+                  {selectedCategory && courseGroups[selectedCategory].map((course) => (
+                    <SelectItem key={course} value={course}>
+                      {course}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
           
+          <div className="space-y-2">
+            <Label htmlFor="urgency">Urgency</Label>
+            <Select value={urgency} onValueChange={setUrgency}>
+              <SelectTrigger id="urgency">
+                <SelectValue placeholder="Select urgency" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="low">Low</SelectItem>
+                <SelectItem value="medium">Medium</SelectItem>
+                <SelectItem value="high">High</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+
           <div className="space-y-2">
             <Label htmlFor="description">Description</Label>
             <Textarea 
@@ -87,44 +143,6 @@ const PostProblem = () => {
                   />
                 </div>
               )}
-            </div>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="space-y-2">
-              <Label htmlFor="category">Category</Label>
-              <Select value={selectedCategory} onValueChange={handleCategoryChange}>
-                <SelectTrigger id="category">
-                  <SelectValue placeholder="Select category" />
-                </SelectTrigger>
-                <SelectContent>
-                  {Object.keys(courseGroups).map((category) => (
-                    <SelectItem key={category} value={category}>
-                      {category}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-            
-            <div className="space-y-2">
-              <Label htmlFor="course">Course</Label>
-              <Select 
-                value={selectedCourse} 
-                onValueChange={setSelectedCourse}
-                disabled={!selectedCategory}
-              >
-                <SelectTrigger id="course">
-                  <SelectValue placeholder={selectedCategory ? "Select course" : "Select a category first"} />
-                </SelectTrigger>
-                <SelectContent>
-                  {selectedCategory && courseGroups[selectedCategory].map((course) => (
-                    <SelectItem key={course} value={course}>
-                      {course}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
             </div>
           </div>
 
