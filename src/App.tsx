@@ -8,6 +8,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Intro from "./pages/Intro";
 import About from "./pages/About";
+import AboutDev from "./pages/AboutDev";
 import Index from "./pages/Index";
 import PostProblem from "./pages/PostProblem";
 import NotFound from "./pages/NotFound";
@@ -26,6 +27,7 @@ const App: React.FC = () => {
             <Routes>
               <Route path="/" element={<Intro />} />
               <Route path="/about" element={<About />} />
+              <Route path="/about-dev" element={<AboutDev />} />
               <Route path="/browse" element={<Index />} />
               <Route path="/post-problem" element={<PostProblem />} />
               <Route path="*" element={<NotFound />} />

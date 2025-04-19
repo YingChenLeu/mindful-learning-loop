@@ -13,7 +13,7 @@ const Navbar = () => {
             <RocketIcon size={20} />
             <span>Initiative</span>
           </Link>
-          <Link to="/about" className="flex items-center space-x-2 hover:text-[#A8D3CC] transition-colors">
+          <Link to="/about-dev" className="flex items-center space-x-2 hover:text-[#A8D3CC] transition-colors">
             <UserRound size={20} />
             <span>About the Dev</span>
           </Link>
