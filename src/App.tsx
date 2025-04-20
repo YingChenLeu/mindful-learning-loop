@@ -12,6 +12,7 @@ import Index from "./pages/Index";
 import PostProblem from "./pages/PostProblem";
 import NotFound from "./pages/NotFound";
 import Community from "./pages/Community";
+import Auth from "./pages/Auth";
 
 const App: React.FC = () => {
   const queryClient = new QueryClient();
@@ -31,6 +32,7 @@ const App: React.FC = () => {
               <Route path="/browse" element={<Index />} />
               <Route path="/post-problem" element={<PostProblem />} />
               <Route path="/community" element={<Community />} />
+              <Route path="/auth" element={<Auth />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </BrowserRouter>
