@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
@@ -13,6 +14,9 @@ import PostProblem from "./pages/PostProblem";
 import NotFound from "./pages/NotFound";
 import Community from "./pages/Community";
 import Auth from "./pages/Auth";
+import Contributions from "./pages/Contributions";
+import Profile from "./pages/Profile";
+import Wellness from "./pages/Wellness";
 
 const App: React.FC = () => {
   const queryClient = new QueryClient();
@@ -33,6 +37,9 @@ const App: React.FC = () => {
               <Route path="/post-problem" element={<PostProblem />} />
               <Route path="/community" element={<Community />} />
               <Route path="/auth" element={<Auth />} />
+              <Route path="/contributions" element={<Contributions />} />
+              <Route path="/profile" element={<Profile />} />
+              <Route path="/wellness" element={<Wellness />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </BrowserRouter>

@@ -78,11 +78,12 @@ const mockProblems: Problem[] = [
   }
 ];
 
-interface ProblemBoardProps {
+export interface ProblemBoardProps {
   selectedCategory: string;
+  className?: string;
 }
 
-export const ProblemBoard = ({ selectedCategory }: ProblemBoardProps) => {
+export const ProblemBoard = ({ selectedCategory, className }: ProblemBoardProps) => {
   const [problems, setProblems] = useState<Problem[]>(mockProblems);
   const [selectedProblem, setSelectedProblem] = useState<Problem | null>(null);
   const [isChatOpen, setIsChatOpen] = useState(false);
@@ -102,7 +103,7 @@ export const ProblemBoard = ({ selectedCategory }: ProblemBoardProps) => {
 
   return (
     <>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 ${className}`}>
         {filteredProblems.map((problem) => (
           <HelpBoardCard
             key={problem.id}
