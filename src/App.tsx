@@ -17,6 +17,7 @@ import Auth from "./pages/Auth";
 import Contributions from "./pages/Contributions";
 import Profile from "./pages/Profile";
 import Wellness from "./pages/Wellness";
+import StillInDevelopment from "./pages/StillInDevelopment";
 
 const App: React.FC = () => {
   const queryClient = new QueryClient();
@@ -40,6 +41,7 @@ const App: React.FC = () => {
               <Route path="/contributions" element={<Contributions />} />
               <Route path="/profile" element={<Profile />} />
               <Route path="/wellness" element={<Wellness />} />
+              <Route path="/in-development" element={<StillInDevelopment />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </BrowserRouter>

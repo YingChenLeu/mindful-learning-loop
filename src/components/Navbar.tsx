@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { RocketIcon, UserRound, Users, LogIn } from 'lucide-react';
+import { RocketIcon, UserRound, Users, LogIn, Construction } from 'lucide-react';
 import { Button } from './ui/button';
 
 const Navbar = () => {
@@ -20,6 +20,10 @@ const Navbar = () => {
           <Link to="/community" className="flex items-center space-x-2 hover:text-[#A8D3CC] transition-colors">
             <Users size={20} />
             <span>Community</span>
+          </Link>
+          <Link to="/in-development" className="flex items-center space-x-2 hover:text-[#A8D3CC] transition-colors">
+            <Construction size={20} />
+            <span>In Development</span>
           </Link>
         </div>
         <Button variant="outline" className="bg-transparent border-[#A8D3CC] text-[#D8DEDE] hover:bg-[#A8D3CC] hover:text-[#2D4F53]">
