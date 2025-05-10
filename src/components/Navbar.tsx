@@ -1,8 +1,11 @@
 
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { RocketIcon, UserRound, Users, LogIn, Construction } from 'lucide-react';
+import { RocketIcon, UserRound, Users, LogIn, Construction, Shield } from 'lucide-react';
 import { Button } from './ui/button';
+
+// In a real application, this would be determined by authentication state
+const isAdmin = true; // Set to true for testing purposes
 
 const Navbar = () => {
   return (
@@ -25,6 +28,12 @@ const Navbar = () => {
             <Construction size={20} />
             <span>In Development</span>
           </Link>
+          {isAdmin && (
+            <Link to="/admin" className="flex items-center space-x-2 hover:text-[#A8D3CC] transition-colors">
+              <Shield size={20} />
+              <span>Admin</span>
+            </Link>
+          )}
         </div>
         <Button variant="outline" className="bg-transparent border-[#A8D3CC] text-[#D8DEDE] hover:bg-[#A8D3CC] hover:text-[#2D4F53]">
           <LogIn className="mr-2" size={20} />

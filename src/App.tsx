@@ -18,6 +18,7 @@ import Contributions from "./pages/Contributions";
 import Profile from "./pages/Profile";
 import Wellness from "./pages/Wellness";
 import StillInDevelopment from "./pages/StillInDevelopment";
+import AdminDashboard from "./pages/AdminDashboard";
 
 const App: React.FC = () => {
   const queryClient = new QueryClient();
@@ -42,6 +43,7 @@ const App: React.FC = () => {
               <Route path="/profile" element={<Profile />} />
               <Route path="/wellness" element={<Wellness />} />
               <Route path="/in-development" element={<StillInDevelopment />} />
+              <Route path="/admin" element={<AdminDashboard />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </BrowserRouter>
